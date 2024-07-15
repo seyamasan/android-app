@@ -1,2 +1,3 @@
 Architecture: MVVM
-Local　DB：　Room
+
+Local DB： Room
