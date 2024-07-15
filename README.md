@@ -1,1 +1,2 @@
-遊びと勉強用のリポジトリ
+Architecture: MVVM
+Local　DB：　Room
