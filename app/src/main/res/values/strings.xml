@@ -4,4 +4,6 @@
     <string name="main_activity_edit_text_hint">文字を入力</string>
     <string name="main_activity_edit_text_invalid">無効な文字が入力されました。</string>
     <string name="main_activity_save_button_text">保存</string>
+    <string name="main_activity_save_msg">保存しました。</string>
+    <string name="main_activity_update_msg">上書きしました。</string>
 </resources>

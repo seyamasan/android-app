@@ -2,7 +2,6 @@ package com.example.seyamaapplication.main.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
@@ -29,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = mainActivityViewModel
 
         setupListener()
+        binding.viewModel?.initEditTextSetValue()
+        setupSavedEditText()
     }
 
     private fun setupListener() {
@@ -39,9 +40,28 @@ class MainActivity : AppCompatActivity() {
         // LiveDataを監視して、変更があった場合に処理を実行する
         binding.viewModel?.editTextInput?.observe(this, Observer { text ->
             if (inspectString(text)) {
+                val strDropLast = binding.editText.text.dropLast(1).toString()
+                binding.editText.setText(strDropLast)
+                binding.viewModel?.setEditTextDropLast(strDropLast)
                 showMessageText(getString(R.string.main_activity_edit_text_invalid))
             }
         })
+
+        binding.viewModel?.saveMsg?.observe(this, Observer { text ->
+            showMessageText(text)
+        })
+    }
+
+    private fun setupSavedEditText() {
+        binding.viewModel?.viewModelScope?.launch {
+            delay(1000) // DBとの兼ね合いで無理やり遅らせている
+            val value = binding.viewModel?.getModelEditText()
+            if (value?.isNotEmpty() == true) {
+                runOnUiThread {
+                    binding.editText.setText(value)
+                }
+            }
+        }
     }
 
     private fun inspectString(input: String): Boolean {
@@ -55,7 +75,6 @@ class MainActivity : AppCompatActivity() {
     private fun showMessageText(message: String) {
         binding.messageText.text = message
         binding.messageText.visibility = View.VISIBLE
-        binding.editText.text = binding.editText.text.dropLast(1) as Editable?
         binding.viewModel?.viewModelScope?.launch {
             delay(5000) // 5秒間の遅延
             runOnUiThread {
