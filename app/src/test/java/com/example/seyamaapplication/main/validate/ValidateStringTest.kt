@@ -9,7 +9,7 @@ class ValidateStringTest : FunSpec() {
         context("正常系") {
             context("ひらがな") {
                 val validateString = ValidateString()
-                validateString.validateSymbol("あ") shouldBe false
+                validateString.validateSymbol("あ") shouldBe true
             }
             context("カタカナ") {
                 val validateString = ValidateString()
@@ -31,7 +31,7 @@ class ValidateStringTest : FunSpec() {
         context("異常系") {
             context("記号のみ") {
                 val validateString = ValidateString()
-                validateString.validateSymbol("#") shouldBe true
+                validateString.validateSymbol("#") shouldBe false
             }
             context("ひらがなと記号") {
                 val validateString = ValidateString()

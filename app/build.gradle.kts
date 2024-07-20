@@ -61,7 +61,6 @@ dependencies {
     kapt(libs.androidx.room.compiler)
 
     // kotest
-    implementation(libs.kotest.framework.api)
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.property)
