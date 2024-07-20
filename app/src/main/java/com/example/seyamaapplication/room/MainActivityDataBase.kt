@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [MainEntity::class], version = 1)
+@Database(entities = [MainEntity::class], version = 1, exportSchema = false)
 abstract class MainActivityDataBase : RoomDatabase() {
     abstract fun mainDao(): MainDao
 
@@ -17,5 +19,4 @@ abstract class MainActivityDataBase : RoomDatabase() {
             ).build()
         }
     }
-
 }
