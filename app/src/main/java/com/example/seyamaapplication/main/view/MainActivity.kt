@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.example.seyamaapplication.R
 import com.example.seyamaapplication.databinding.ActivityMainBinding
+import com.example.seyamaapplication.main.validate.ValidateString
 import com.example.seyamaapplication.main.viewmodel.MainActivityViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,15 +19,17 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var validateString: ValidateString
 
-    private val mainActivityViewModel: MainActivityViewModel by viewModels()
+    private val _mainActivityViewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.viewModel = mainActivityViewModel
+        binding.viewModel = _mainActivityViewModel
 
+        validateString = ValidateString()
         setupListener()
         binding.viewModel?.initEditTextSetValue()
         setupSavedEditText()
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         // LiveDataを監視して、変更があった場合に処理を実行する
         binding.viewModel?.editTextInput?.observe(this, Observer { text ->
-            if (inspectString(text)) {
+            if (validateString.validateSymbol(text)) {
                 val strDropLast = binding.editText.text.dropLast(1).toString()
                 binding.editText.setText(strDropLast)
                 binding.viewModel?.setEditTextDropLast(strDropLast)
@@ -62,13 +65,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun inspectString(input: String): Boolean {
-        val regex = Regex("[^\\p{L}\\p{N}\\s\\p{InHiragana}\\p{InKatakana}\\p{InCJKUnifiedIdeographs}]+")
-
-        // 正規表現にマッチする文字列が含まれているかどうかを判定
-        return regex.containsMatchIn(input)
     }
 
     @SuppressLint("SetTextI18n")

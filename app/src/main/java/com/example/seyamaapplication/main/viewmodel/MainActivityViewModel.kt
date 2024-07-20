@@ -12,7 +12,6 @@ import com.example.seyamaapplication.room.MainDao
 import com.example.seyamaapplication.room.MainEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
