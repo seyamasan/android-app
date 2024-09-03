@@ -1,5 +1,5 @@
 Architecture: MVVM
 
-Local DB： Room
+Local DB： SQLite
 
 Unit Test: kotest
